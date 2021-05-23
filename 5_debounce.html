@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      height: 500px;
+      overflow: auto;
+    }
+
+    div {
+      height: 1500px;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="text" />
+  <script>
+    const input = document.querySelector('input')
+
+    class Utils {
+      constructor() { }
+
+      debounce(callback, time) {
+        let timer = null
+        return function (event) {
+
+          //如果还有定时器存在 则清空上一个定时器
+          //直到time时间内的最后一个操作才能成功执行
+          if (timer != null) clearTimeout(timer)
+
+          timer = setTimeout(() => { //启动定时器
+            callback.call(this, event)
+            timer = null //最后一次生效设为null
+          }, time)
+        }
+      }
+    }
+
+    const debounce = new Utils().debounce
+    input.onkeydown = debounce(function (event) {
+      console.log(event.keyCode)
+    }, 1000)
+  </script>
+</body>
+
+</html>

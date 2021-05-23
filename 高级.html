@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+</body>
+<script>
+  /**
+    方式3:原型链+借用构造函数的组合继承
+     1.利用原型链实现对父类型对象的方法继承
+     2.利用call()借用父类型构建函数初始化相同属性
+  */
+
+  function Person(name, age) {
+    this.name = name
+    this.age = age
+  }
+  Person.prototype.setName = function (name) {
+    this.name = name
+  }
+
+  function Student(name, age, hobby) {
+    Person.call(this, name, age) //借用构造函数
+    this.hobby = hobby
+  }
+  Student.prototype = new Person() //原型链继承
+  Student.prototype.constructor = Student //原型链继承
+  Student.prototype.setHobby = function (hobby) {
+    this.hobby = hobby
+  }
+
+  const stu = new Student('tom', 20, 'PlayGame')
+  stu.setHobby('sing')
+  stu.setName('jerry')
+  console.log(stu)
+  console.log(stu.name, stu.age, stu.hobby)
+
+
+</script>
+
+</html>

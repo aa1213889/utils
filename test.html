@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Example HTML Page</title>
+</head>
+
+<body>
+</body>
+<script src="./call.js"></script>
+<script>
+
+  function add(a, b) {
+    console.log(this)
+    return a + b + this.c
+  }
+
+  const obj = {
+    c: 521
+  }
+
+  window.c = 1314
+
+  const result = new Utils().call(add, obj, 10, 20) //打印add函数中的this
+  console.log(result) //返回数字 521 + 10 + 20 = 551
+  console.log(obj)  //返回之前的obj的
+</script>
+
+</html>

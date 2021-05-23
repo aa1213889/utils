@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      height: 500px;
+      overflow: auto;
+    }
+
+    div {
+      height: 1500px;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>在函数需要频繁触发时:函数执行一次后，只有大于设定的执行周期后才会执行第二次</h1>
+  </div>
+  <script>
+    /**
+     * 事件频繁触发可能造成的问题：
+     *  *一些浏览器事件:window.onresize、window.mousemove等，触发的频率非常高，会造成界面卡顿
+     *  *如果向后台发送请求，频繁触发，对服务器造成不必要的压力
+     *
+     * 如何限制事件处理函数频繁调用：
+     *  *函数节流
+     *  *函数防抖
+     *
+     * 函数节流(throttle)
+     * 理解：
+     *  *在函数需要频繁触发时:函数执行一次后，只有大于设定的执行周期后才会执行第二次
+     *  *适合多次事件按时间做平均分配触发
+     * 场景：
+     *  *窗口调整(resize)
+     *  *而面滚动(scroll)
+     *  *DOM元素的拖拽功能实现(mousemove)
+     *  *抢购疯狂点击(click)
+     */
+
+    class Utils {
+      constructor() { }
+
+      throttle(callback, wait) {
+        let startTime = 0 //产生闭包  startTime一直存在内存中
+        return function (event) { //返回结果是一个函数
+          let now = Date.now() //获取当前时间戳
+          if (now - startTime >= wait) {
+            //callback中的this 指回
+            callback.call(this, event)
+            startTime = now
+          }
+        }
+      }
+    }
+
+    const throttle = new Utils().throttle
+    window.addEventListener('scroll', throttle(function (e) {
+      console.log(event)
+    }, 500))
+  </script>
+</body>
+
+</html>
