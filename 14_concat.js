@@ -1,0 +1,18 @@
+/* 
+语法: var new_array = concat(old_array, value1[, value2[, ...[, valueN]]]) 
+功能: 将n个数组或值与当前数组合并生成一个新数组
+*/
+function concat (array, ...values) {
+  const arr = [...array]
+  values.forEach(value => {
+    if (Array.isArray(value)) {
+      arr.push(...value)
+    } else {
+      arr.push(value)
+    }
+  })
+  return arr
+}
+
+const arr = [1, 2]
+console.log(concat(arr, [3, 4], 6))  // [1, 2, 3, 4, 6]
